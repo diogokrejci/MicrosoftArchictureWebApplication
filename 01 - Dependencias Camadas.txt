@@ -1,0 +1,33 @@
+A) Aplicação terá 3 camadas
+
+1 - UI
+	- Controllers
+	-View Model
+
+2 - Domain ( Application Core)
+	- Domain Service (implementa interfaces)
+		- Entities
+		- Interfaces
+
+3 - Infrastructure
+	- Repositories
+	- Impl Services
+
+
+B) Dependência Camadas
+
+- A camada Domain ( Application Core) é a mais interna de todas, não depende de ninguém
+
+- UI e Infrastructure dependem da Domain
+
+- UI e Infra não possuem dependência entre si
+
+
+C) Conclusão
+
+	User Inface layer trabalha com as interfaces definidas no Application Core
+
+	User Inter pode referenciar as interfaces existentes na Infrastructure.
+
+	Nunca pertimita que a UI referencia a implementação concreta (Desacoplamento)
+				

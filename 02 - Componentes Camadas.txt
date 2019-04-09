@@ -1,0 +1,63 @@
+A) Asp.Net Core Web App
+
+	- Controllers
+
+	- Views
+
+	- View Model
+
+	- Filters
+		- Response Chache Filters
+		- Model Validation Filter
+		- Other Filters
+
+	- Asp.Net Core Identity
+
+Imp:
+	- Filtros de validação podem ser realizados pelo Fluent Validation
+
+	- Autorização realizada pelo Identity (que está integragrado na ferramente) poderá ser realizada na Infra
+
+	- Como a camada de UI não possui dependência direta com a Infra, você pode trocar as implmentações de maneira fácil
+
+
+B) Infrastructure
+
+	- In memory Cache
+
+	- EF Db Context
+
+	- Redis Cache Service
+
+	- Azure Service Bus Acessor
+	
+	- SMS service
+
+	- Email Service
+
+	- Other Web Api Clients
+
+Imp:
+	- Facilita utilização de teste de integração com serviços externos
+
+
+C) Application Core
+
+	- Interface
+
+	- POCO Entities
+
+	- Business Service
+		Fará a comunicação da UI com a INFRA
+
+	- Domain Events
+
+	- Application Exceptions
+
+	- Value Objects
+
+	- Aggregations
+
+	- Specification 
+
+--> Como o Application Core não depende de ninguém, é muito simples escrever os testes de unidade nessa camada

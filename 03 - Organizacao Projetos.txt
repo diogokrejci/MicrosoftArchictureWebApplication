@@ -1,0 +1,91 @@
+									Organizando Código na Arquitetura Clean
+
+A) Introdução
+
+- Na arquitetura clean, cada projeto tem sua responsabilidade.
+
+- Assim como cada tipo pertence a um determinado projeto. Muitas vezes, esses tipos estão divididos em pastas. 
+
+
+
+B) Application Core
+
+- Nessa camada estão as lógicas de negócio que incluem entidades, interfaces e serviços.
+
+- Essas interfaces são abstrações para operações que vão executar usando as implementações da camada de Infra
+tais como: acesso a dado, acesso sistema de arquivos, chamadas de rede etc
+
+- Muitas vezes os Serviços e Interfaces definidos nessa camada irão trabalhar com tipos non-entity, isto é DTO
+
+Elementos:
+	- Entities (classes de domínio que serão persistidas)
+	- Aggregates
+	- Services
+	- DTOs
+	- Specifications
+	- Excepetions
+
+
+C) Infrastructure
+
+	- Tipicamente inclui a implementação do Acesso ao Banco de Dados
+
+		- Em .Net isso inclui: Entity Framework DB context e EF Core Migration e classes de implementação
+
+		- Geralmente usa-se o padrão Repository
+
+	- Implementações das Interfaces dos Serviços criadas na camada CORE que envolvem conceitos de Infra.
+	
+	**Imp: Caso o serviço implementado na Infra use somente conceitos do Domain, ou seja, não depende dos 
+		tipos criados na Infra, mova-o para a camada Core. 
+
+
+	- Elementos:
+		
+		- EF Core Type (DbContext, Migration)
+
+		- Data Acess Implemantation Type (Repository)
+
+		- Infra Specific service (FileLogger, SmtpNotifier, etc )
+
+
+D) User Interface ( ASP.NET Core MVC)
+
+	- Ponto de entrada da aplicação
+
+	- Serviços que trabalham somente com UI Layer Types devem ser definidos aqui
+	
+	- Referencias:
+
+		- Application Core project
+
+		- Infrastructure
+			
+			- Toda interação com a Infra de ser feita via Interfaces definidas no Application Core
+
+			- Não pode existir referência para camada de infra
+
+	- Elementos
+
+		- Controllers
+
+		- Filters
+
+		- Pages
+
+		- Services
+
+		- Views
+
+		- View Model
+
+		- Startup
+			 
+			 - Configuração da aplicação
+
+			 - Ligação entre Interfaces e Classes (Injeção de Dependência)
+
+	Imp: repare que para Implementar as Interfaces, a camada de UI precisará referenciar a de INFRA em tempo de compilação.
+	Para reduzir essa dependência, podemos utilizar containers de DI (Injeção de Dependência) acabando coma referência em
+	tempo de compilação e levando-a para tempo de Execução.
+
