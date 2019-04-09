@@ -1,0 +1,13 @@
+											Comandos Migration
+
+1 - Add-Migration
+
+	Comando responsável por pegar todas atualizações feitas no DbContext, como por exemplo a inclusão de uma nova classe,
+		e atualizá-la no banco
+
+	Criará um novo arquivo .cs com a configuração do banco atualizada
+
+
+2 - Update-Database
+
+	Este comando será responsável por executar o último arquivo criado pelo comando "Add-Migration"

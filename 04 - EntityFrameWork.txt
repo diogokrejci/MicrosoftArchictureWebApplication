@@ -1,0 +1,93 @@
+											Entity Framework
+
+A) Introdução
+
+- Ferrameten de ORM responsável por fazer o mapeamento das suas cçasses de domínio para o Banco
+
+- Metodologia Code First
+
+
+B) DbContext
+
+- DbContext é a classe responsável por fazer a comunicação com banco de dados
+
+- DbSet é a classe responsável por fazer o mapeamento da Entitade para o banco
+
+
+
+
+Exemplo:
+
+
+public class DataBaseContext : DbContext
+    {
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
+        {
+            
+        }
+
+        public DbSet<Cliente> Clientes { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cliente>().ToTable("Cliente");
+        }
+
+
+
+    }
+
+
+C) Migration
+
+	- Sempre que quiser fazer o mapeamento, você deverá adicionar uma Migração
+		
+		- Essa migraçaõ deve ser adicionada no seu projeto de Infra
+
+		- No powershell faça:
+
+			- Aponde o Default Projeto para seu projeto de Infra
+
+			- Digite: add-migration nomeMigracao
+
+			- Caso vc tenha mais de 1 contexto: add-migration -Context nomeContexto nomeMigracao
+
+			- Por fim: update-database nomeMigracao
+
+	- A migração será responsável por ler seu DbContext e gerar todo mapeamento do banco a partir do DdSet Existente
+
+	- Como resultado, será criada uma classe que representa com todo mapeamento do banco
+
+	Ex: 
+	
+	- Supondo que você tenha um DbSet Cliente no seu DbContext
+
+	- Digitou no powershell "add-migration Inicial"
+	
+	- Resultado: será criada uma pasta "Migration" que conterá a classe "Inicial" que herda de Migration e possui todo mapeamento
+
+		public partial class Inicial : Migration
+			{
+				protected override void Up(MigrationBuilder migrationBuilder)
+				{
+					migrationBuilder.CreateTable(
+						name: "Cliente",
+						columns: table => new
+						{
+							ClienteId = table.Column<int>(nullable: false)
+								.Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+							Nome = table.Column<string>(nullable: true),
+							Cpf = table.Column<string>(nullable: true)
+						},
+						constraints: table =>
+						{
+							table.PrimaryKey("PK_Cliente", x => x.ClienteId);
+						});
+				}
+
+				protected override void Down(MigrationBuilder migrationBuilder)
+				{
+					migrationBuilder.DropTable(
+						name: "Cliente");
+				}
+			}
