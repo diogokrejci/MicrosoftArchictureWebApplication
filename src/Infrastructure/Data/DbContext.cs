@@ -48,7 +48,7 @@ namespace Infrastructure.Data
         {
             //Diz como será o nome da tabela gerada a partir do DbSet
             // Se fosse automático, seria Clientes. Porém, sabemos que não existe plural em nome de tabelas do Banco
-            modelBuilder.Entity<Cliente>().ToTable("Cliente");
+            modelBuilder.Entity<Cliente>().ToTable("Cliente"); 
         }
     }
 }
