@@ -36,7 +36,7 @@ namespace Infrastructure.Data
         }
 
         //Passo 2
-        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Cliente> Clientes { get; set; } 
 
 
         //Passo 3
